@@ -24,7 +24,7 @@ valgrind() {
 
 Update your zshrc `source ~/.zshrc`
 
-4. Add to your makefile something along these lines
+3. Add to your makefile something along these lines
 ```c
 # Compiler
 ifeq($(MAKECMDGOALS), debug_docker)
