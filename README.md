@@ -16,7 +16,7 @@ valgrind --tool=helgrind ./philo 2 150 50 50 5
 
 ```c
 valgrind() {
-	docker start valgrind-env || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
+	docker start valgrind-env || docker run -dit --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	args=()
 	exe_found=0
 	for arg in "$@"; do
@@ -36,16 +36,16 @@ Update your zshrc `source ~/.zshrc` or .bashrc
 ```c
 # Compiler
 ifeq ($(MAKECMDGOALS), debug)
-	CFLAGS +=	-g
+	CFLAGS +=		-g
 else ifeq ($(MAKECMDGOALS), debug_docker)
-	CFLAGS +=	-g
-	CC =		gcc
+	CFLAGS +=		-g
+	override CC =	gcc
 endif
 
 # Docker stuff
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
-	docker start $(CONTAINER_NAME) || docker run -it --name $(CONTAINER_NAME) ubuntu bash -c "apt update && apt install -y make gcc valgrind"
+	docker start $(CONTAINER_NAME) || docker run -dit --name $(CONTAINER_NAME) ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	docker exec $(CONTAINER_NAME) rm -rf /app/
 	docker exec $(CONTAINER_NAME) mkdir -p /app/
 	docker cp . $(CONTAINER_NAME):/app/
