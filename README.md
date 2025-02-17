@@ -6,7 +6,7 @@
 So f.ex.
 ```c
 make valgrind
-valgrind-env --tool=helgrind ./philo 2 150 50 50 5
+valgrind --tool=helgrind ./philo 2 150 50 50 5
 ```
 
 ## Installation (step by step)
