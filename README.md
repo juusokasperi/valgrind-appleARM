@@ -36,7 +36,7 @@ endif
 # Docker stuff
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
-	docker start $(CONTAINER_NAME) || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
+	docker start $(CONTAINER_NAME) || docker run -it --name $(CONTAINER_NAME)$ ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	docker exec $(CONTAINER_NAME) rm -rf /app/
 	docker exec $(CONTAINER_NAME) mkdir -p /app/
 	docker cp . $(CONTAINER_NAME):/app/
