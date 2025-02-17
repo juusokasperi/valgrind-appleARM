@@ -13,9 +13,8 @@ Note that the program will be inside /app/ folder.
 ## Installation (step by step)
 
 1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
-2. Set up aliases for the sh of your choice. F.ex. for zsh;
+2. Set up aliases for the sh of your choice. F.ex. for zsh add this to your ~/.zshrc;
 ```
-vim ~/.zshrc
 valgrind-container() {
 	docker start valgrind-env || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	docker exec -it valgrind-env valgrind "$@"
