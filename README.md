@@ -17,7 +17,16 @@ valgrind --tool=helgrind ./philo 2 150 50 50 5
 ```c
 valgrind() {
 	docker start valgrind-env || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
-	docker exec -it valgrind-env valgrind "$@"
+	args=()
+	exe_found=0
+	for arg in "$@"; do
+		if [[ $exe_found -eq 0 && ! "$arg" =~ ^- ]]; then
+			[[ "$arg" != /* ]] && arg="/app/$arg"
+			exe_found=1
+		fi
+		args=("${args[@]}" "$arg")
+	done
+	docker exec -it valgrind-env valgrind "${args[@]}"
 }
 ```
 
