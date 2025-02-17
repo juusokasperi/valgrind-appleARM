@@ -26,24 +26,21 @@ Update your zshrc `source ~/.zshrc`
 4. Add to your makefile something along these lines
 ```c
 # Compiler
-ifeq ($(MAKECMDGOALS), debug)
-	CC = gcc
+ifeq($(MAKECMDGOALS), debug_docker)
 	CFLAGS += -g
-else
-	CC = cc
+	CC = gcc
 endif
-CFLAGS += -Wall -Wextra -Werror $(INCS)
 
 # Docker stuff
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
 	docker start $(CONTAINER_NAME) || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
-	docker exec $(CONTAINER_NAME) rm -rf /app/ || true
+	docker exec $(CONTAINER_NAME) rm -rf /app/
 	docker exec $(CONTAINER_NAME) mkdir -p /app/
 	docker cp . $(CONTAINER_NAME):/app/
-	docker exec $(CONTAINER_NAME) make -C /app/ debug
+	docker exec $(CONTAINER_NAME) make -C /app/ debug_docker
 
-debug: re
+debug_docker: re
 
 re: fclean all
 
