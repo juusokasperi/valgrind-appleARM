@@ -26,9 +26,11 @@ Update your zshrc `source ~/.zshrc` or .bashrc
 3. Add to your makefile something along these lines
 ```c
 # Compiler
-ifeq($(MAKECMDGOALS), debug_docker)
-	CFLAGS += -g
-	CC = gcc
+ifeq ($(MAKECMDGOALS), debug)
+	CFLAGS +=	-g
+else ifeq ($(MAKECMDGOALS), debug_docker)
+	CFLAGS +=	-g
+	CC =		gcc
 endif
 
 # Docker stuff
