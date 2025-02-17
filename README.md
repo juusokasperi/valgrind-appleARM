@@ -6,8 +6,9 @@
 So f.ex.
 ```
 make valgrind
-valgrind-env --tool=helgrind ./philo 2 150 50 50 5
+valgrind-env --tool=helgrind ./app/philo 2 150 50 50 5
 ```
+Note that the program will be inside /app/ folder.
 
 ## Installation (step by step)
 
