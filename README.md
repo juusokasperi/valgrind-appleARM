@@ -45,5 +45,5 @@ debug_docker: re
 
 re: fclean all
 
-.PHONY: fclean clean re all debug valgrind
+.PHONY: fclean clean re all debug_docker valgrind
 ```
