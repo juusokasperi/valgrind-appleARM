@@ -12,9 +12,8 @@ valgrind --tool=helgrind ./philo 2 150 50 50 5
 ## Installation (step by step)
 
 1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
-2. Set up aliases for the of your choice. (example in zsh)
+2. Set up aliases for the of your choice. Should work for both zsh and bash.
 
-Open your ~/.zshrc and add this alias (you either start the docker or install the container)
 ```c
 valgrind() {
 	docker start valgrind-env || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
@@ -22,7 +21,7 @@ valgrind() {
 }
 ```
 
-Update your zshrc `source ~/.zshrc`
+Update your zshrc `source ~/.zshrc` or .bashrc
 
 3. Add to your makefile something along these lines
 ```c
