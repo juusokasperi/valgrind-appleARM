@@ -16,11 +16,12 @@ valgrind-env --tool=helgrind ./philo 2 150 50 50 5
 
 Open your ~/.zshrc and add this alias (you either start the docker or install the container)
 ```c
-valgrind-container() {
+valgrind() {
 	docker start valgrind-env || docker run -it --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	docker exec -it valgrind-env valgrind "$@"
 }
 ```
+
 Update your zshrc `source ~/.zshrc`
 
 4. Add to your makefile something along these lines
