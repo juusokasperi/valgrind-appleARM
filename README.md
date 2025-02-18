@@ -1,20 +1,22 @@
 # Setting up valgrind in a Docker to run on Apple Silicon
 
-- The setup itself is quite straight-forward, I will do a step-by-step walkthrough and provide an example Makefile to use with your projects. The execution is a bit slower, as expected.
-- The idea is that you can make your project into the container by executing `make valgrind` in your project folder, and using a shell function to run it.
+* The setup itself is quite straight-forward, I will do a step-by-step walkthrough and provide an example Makefile to use with your projects. The execution is a bit slower, as expected.
+* The idea is that you can build your project inside the container by executing `make valgrind` in your project folder, and then use a shell function to run it.
 
 So f.ex.
-```c
+```sh
 make valgrind
 valgrind --tool=helgrind ./philo 2 150 50 50 5
 ```
 
 ## Installation (step by step)
 
-1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
-2. Set up this function in your `~/.zshrc` (or bash, should work too)
+### 1. Install Docker
+Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
+### 2. Add the shell function
+Add this function to your `~/.zshrc` (or `~/.bashrc` if using bash)
 
-```c
+```sh
 valgrind() {
 	docker start valgrind-env || docker run -dit --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
 	args=()
@@ -29,17 +31,15 @@ valgrind() {
 	docker exec -it valgrind-env valgrind "${args[@]}"
 }
 ```
+Update your shell configuration
+* For zsh: `source ~/.zshrc`
+* For bash: `source ~/.bashrc`
 
-Update your zshrc `source ~/.zshrc`
-
-3. Add to your makefile something along these lines
-```c
+### 3. Add to your Makefile
+```make
 # Compiler
-ifeq ($(MAKECMDGOALS), debug)
+ifeq ($(MAKECMDGOALS), debug_docker)
 	CFLAGS +=		-g
-else ifeq ($(MAKECMDGOALS), debug_docker)
-	CFLAGS +=		-g
-	override CC =	gcc
 endif
 
 # Docker stuff
@@ -58,4 +58,9 @@ re: fclean all
 .PHONY: fclean clean re all debug_docker valgrind
 ```
 
-4. All done! Make your project using `make valgrind` and just use `valgrind` in shell to use the container.
+### 4. All done!
+Now you can:
+* Build the project inside the container:
+`make valgrind`
+* Run valgrind from your shell using:
+`valgrind --options executable args`
