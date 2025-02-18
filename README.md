@@ -18,7 +18,7 @@ Add this function to your `~/.zshrc` (or `~/.bashrc` if using bash)
 
 ```sh
 valgrind() {
-	docker start valgrind-env || docker run -dit --name valgrind-env ubuntu bash -c "apt update && apt install -y make gcc valgrind"
+	docker start valgrind-env || (docker run -dit --name valgrind-env ubuntu /bin/bash && docker exec valgrind-env apt-get update && docker exec valgrind-env apt-get install -y make gcc valgrind)
 	args=()
 	exe_found=0
 	for arg in "$@"; do
