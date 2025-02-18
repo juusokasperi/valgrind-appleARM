@@ -1,7 +1,7 @@
 # Setting up valgrind in a Docker to run on Apple Silicon
 
 - The setup itself is quite straight-forward, I will do a step-by-step walkthrough and provide an example Makefile to use with your projects. The execution is a bit slower, as expected.
-- The idea is that you can make your project into the container by executing `make valgrind` in your project folder, and using an alias to run it.
+- The idea is that you can make your project into the container by executing `make valgrind` in your project folder, and using a shell function to run it.
 
 So f.ex.
 ```c
