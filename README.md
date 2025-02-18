@@ -39,10 +39,10 @@ Update your shell configuration
 ```make
 # Compiler
 ifeq ($(MAKECMDGOALS), debug_docker)
-	CFLAGS +=		-g
+	CFLAGS += -g
 endif
 
-# Docker stuff
+# Docker
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
 	docker start $(CONTAINER_NAME) || docker run -dit --name $(CONTAINER_NAME) ubuntu bash -c "apt update && apt install -y make gcc valgrind"
@@ -61,6 +61,10 @@ re: fclean all
 ### 4. All done!
 Now you can:
 * Build the project inside the container:
-`make valgrind`
+```sh
+make valgrind
+```
 * Run valgrind from your shell using:
-`valgrind --options executable args`
+```sh
+valgrind --options executable args
+```
