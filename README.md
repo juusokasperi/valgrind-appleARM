@@ -12,7 +12,7 @@ valgrind --tool=helgrind ./philo 2 150 50 50 5
 ## Installation (step by step)
 
 1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
-2. Set up aliases in your `~/.zshrc` (or bash, should work too)
+2. Set up this function in your `~/.zshrc` (or bash, should work too)
 
 ```c
 valgrind() {
