@@ -12,7 +12,7 @@ valgrind --tool=helgrind ./philo 2 150 50 50 5
 ## Installation (step by step)
 
 1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine.
-2. Set up aliases for the of your choice. Should work for both zsh and bash.
+2. Set up aliases in your `~/.zshrc` (or bash, should work too)
 
 ```c
 valgrind() {
@@ -30,7 +30,7 @@ valgrind() {
 }
 ```
 
-Update your zshrc `source ~/.zshrc` or .bashrc
+Update your zshrc `source ~/.zshrc`
 
 3. Add to your makefile something along these lines
 ```c
