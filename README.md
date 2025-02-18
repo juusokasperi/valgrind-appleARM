@@ -58,4 +58,4 @@ re: fclean all
 .PHONY: fclean clean re all debug_docker valgrind
 ```
 
-4. All done! Make your project using `make valgrind` and just use your alias `valgrind` to use the container.
+4. All done! Make your project using `make valgrind` and just use `valgrind` in shell to use the container.
