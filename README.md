@@ -38,24 +38,25 @@ Update your shell configuration
 ### 3. Add to your Makefile
 ```make
 # Compiler
-ifeq ($(MAKECMDGOALS), debug_docker)
+ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += -g
 endif
 
-# Docker
+ifeq ($(shell uname -s)-$(shell uname-m), Darwin-arm64)
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
 	docker start $(CONTAINER_NAME) || (docker run -dit --name $(CONTAINER_NAME) ubuntu /bin/bash && docker exec $(CONTAINER_NAME) apt-get update && docker exec $(CONTAINER_NAME) apt-get install -y make gcc valgrind)
 	docker exec $(CONTAINER_NAME) rm -rf /app/
 	docker exec $(CONTAINER_NAME) mkdir -p /app/
 	docker cp . $(CONTAINER_NAME):/app/
-	docker exec $(CONTAINER_NAME) make -C /app/ debug_docker
+	docker exec $(CONTAINER_NAME) make -C /app/ debug
+endif
 
-debug_docker: re
+debug: re
 
 re: fclean all
 
-.PHONY: fclean clean re all debug_docker valgrind
+.PHONY: fclean clean re all debug valgrind
 ```
 
 ### 4. All done!
