@@ -42,7 +42,7 @@ ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += -g
 endif
 
-ifeq ($(shell uname -s)-$(shell uname-m), Darwin-arm64)
+ifeq ($(shell uname -s)-$(shell uname -m), Darwin-arm64)
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
 	docker start $(CONTAINER_NAME) || (docker run -dit --name $(CONTAINER_NAME) ubuntu /bin/bash && docker exec $(CONTAINER_NAME) apt-get update && docker exec $(CONTAINER_NAME) apt-get install -y make gcc valgrind)
