@@ -57,7 +57,7 @@ valgrind: fclean
 valgrind_clean:
 	@docker start $(CONTAINER_NAME)
 	@docker exec $(CONTAINER_NAME) rm -rf /app/
-	@echo "✅ Valgrind docker cleaning complete.$(ENDCOLOR)"
+	@echo "✅ Valgrind docker cleaning complete."
 endif
 
 debug: re
