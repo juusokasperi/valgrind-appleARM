@@ -45,11 +45,19 @@ endif
 ifeq ($(shell uname -s)-$(shell uname -m), Darwin-arm64)
 CONTAINER_NAME = valgrind-env
 valgrind: fclean
-	docker start $(CONTAINER_NAME) || (docker run -dit --name $(CONTAINER_NAME) ubuntu /bin/bash && docker exec $(CONTAINER_NAME) apt-get update && docker exec $(CONTAINER_NAME) apt-get install -y make gcc valgrind)
-	docker exec $(CONTAINER_NAME) rm -rf /app/
-	docker exec $(CONTAINER_NAME) mkdir -p /app/
-	docker cp . $(CONTAINER_NAME):/app/
-	docker exec $(CONTAINER_NAME) make -C /app/ debug
+	@docker start $(CONTAINER_NAME) || (docker run -dit \
+	--name $(CONTAINER_NAME) ubuntu /bin/bash \
+	&& docker exec $(CONTAINER_NAME) apt-get update \
+	&& docker exec $(CONTAINER_NAME) apt-get install -y make gcc valgrind)
+	@docker exec $(CONTAINER_NAME) rm -rf /app/
+	@docker exec $(CONTAINER_NAME) mkdir -p /app/
+	@docker cp . $(CONTAINER_NAME):/app/
+	@docker exec $(CONTAINER_NAME) make -C /app/ debug --no-print-directory
+	@echo "✅ Valgrind docker compilation complete!"
+valgrind_clean:
+	@docker start $(CONTAINER_NAME)
+	@docker exec $(CONTAINER_NAME) rm -rf /app/
+	@echo "✅ Valgrind docker cleaning complete.$(ENDCOLOR)"
 endif
 
 debug: re
